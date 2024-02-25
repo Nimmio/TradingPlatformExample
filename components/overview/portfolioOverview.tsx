@@ -1,14 +1,23 @@
 import Stock from "@/types/stocks";
-import { Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Card,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
-type props= {
-  stocks: Stock[]
-}
+type props = {
+  stocks: Stock[];
+};
 
-export default function PortfolioOverview(props:props) {
+export default function PortfolioOverview(props: props) {
   const { stocks } = props;
-    return (
-            <TableContainer component={Paper}>
+  return (
+    <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -19,10 +28,10 @@ export default function PortfolioOverview(props:props) {
           </TableRow>
         </TableHead>
         <TableBody>
-        {stocks.map((stock) => (
+          {stocks.map((stock) => (
             <TableRow
               key={stock.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {stock.name}
@@ -31,9 +40,9 @@ export default function PortfolioOverview(props:props) {
               <TableCell>{stock.value}</TableCell>
               <TableCell>{stock.bought * stock.value}</TableCell>
             </TableRow>
-        ))}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
-    );
+  );
 }
