@@ -5,7 +5,6 @@ type props= {
   stocks: Stock[]
   buyStock:(id:number) => void;
   sellStock:(id:number) => void;
-
 }
 
 export default function TradingTable(props:props) {

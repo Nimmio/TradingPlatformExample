@@ -27,18 +27,24 @@ export const calculateStockValues = (stocks:Stock[]) => {
     });
     return newStocks;
 }
-export const getStocksAfterBought = (currentStock:Stock, stocks:Stock[]) =>{
+export const getStocksAfterBought = (currentStock:Stock, stocks:Stock[], amount:number) =>{
     const newStocks:Stock[] = stocks;
-    newStocks[newStocks.findIndex(stock => stock.id === currentStock.id)].bought++;
+    const prevBoughtStocks = newStocks[newStocks.findIndex(stock => stock.id === currentStock.id)].bought;
+    newStocks[newStocks.findIndex(stock => stock.id === currentStock.id)].bought = prevBoughtStocks + amount;
     return newStocks;
 } 
 
-export const getStocksAfterSelling = (currentStock:Stock, stocks:Stock[]) =>{
+export const getStocksAfterSelling = (currentStock:Stock, stocks:Stock[], amount:number) =>{
     const newStocks:Stock[] = stocks;
-    newStocks[newStocks.findIndex(stock => stock.id === currentStock.id)].bought--;
+    const prevBoughtStocks = newStocks[newStocks.findIndex(stock => stock.id === currentStock.id)].bought;
+    newStocks[newStocks.findIndex(stock => stock.id === currentStock.id)].bought = prevBoughtStocks - amount;
     return newStocks;
 } 
 
-export const getPortfolioValue = (stocks:Stocks[]) => {
-    const 
+export const getPortfolioValue = (stocks:Stock[]) => {
+    let value = 0;
+    stocks.forEach(stock => {
+        value = value + (stock.value * stock.bought)
+    });
+    return value;
 }

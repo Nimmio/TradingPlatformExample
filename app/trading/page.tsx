@@ -1,13 +1,20 @@
 'use client'
 import TradingTable from "@/components/trading/tradingTable";
-import { Card, Container } from "@mui/material";
-import { useMoneyStore, useStockStore } from "../store/zustand";
-import { useEffect } from "react";
-import { calculateStockValues, getStocksAfterBought, getStocksAfterSelling } from "@/helper/utils";
-
+import { Card, Container, TextField } from "@mui/material";
+import { useLoginStore, useMoneyStore, useStockStore } from "../store/zustand";
+import { useEffect, useState } from "react";
+import { calculateStockValues, getPortfolioValue, getStocksAfterBought, getStocksAfterSelling } from "@/helper/utils";
+import { useRouter } from 'next/navigation'
 export default function Trading() {
     const {availableMoney, reduceAvailableMoney,increaseAvailableMoney, portfolioValue, setNewPortfolioValue} = useMoneyStore();
     const {stocks,newValuesForStocks } = useStockStore();
+    const router = useRouter()
+    const {loggedIn} = useLoginStore();
+    const [amount, setAmount] = useState('1');
+
+
+
+    if(!loggedIn) router.push('/login')
     useEffect(() => {
         const newStocks = calculateStockValues(stocks);
         newValuesForStocks(newStocks);
@@ -18,32 +25,35 @@ export default function Trading() {
 
     const handleBuyStock = (id:number) => {
         const currentStock = findStockById(id);
-        
+        const amountNumber= parseInt(amount);
         //Error Handling
         if (!currentStock) return;
-        if(currentStock.value > availableMoney) return;
-        
-        reduceAvailableMoney(currentStock.value);
-        const newStocks = getStocksAfterBought(currentStock, stocks);
+        if((currentStock.value * amountNumber) > availableMoney) return;
+
+        reduceAvailableMoney(currentStock.value * amountNumber);
+        const newStocks = getStocksAfterBought(currentStock, stocks, amountNumber);
         newValuesForStocks(newStocks);
 
-        getPortfolioValue(stocks);
 
-        setNewPortfolioValue(portfolioValue + currentStock.value)
+        setNewPortfolioValue(getPortfolioValue(stocks));
+        
 
     }
 
     const handleSellStock = (id:number) => {
         const currentStock = findStockById(id);
-        
+        const amountNumber= parseInt(amount);
+
         //Error Handling
         if (!currentStock) return;
-        if (currentStock.bought === 0) return;
+        if (currentStock.bought < amountNumber) return;
         
-        increaseAvailableMoney(currentStock.value);
-        setNewPortfolioValue(portfolioValue - currentStock.value)
-        const newStocks = getStocksAfterSelling(currentStock, stocks);
+        increaseAvailableMoney(currentStock.value * amountNumber);
+        const newStocks = getStocksAfterSelling(currentStock, stocks, amount);
         newValuesForStocks(newStocks);
+
+        setNewPortfolioValue(getPortfolioValue(stocks));
+
     }
 
     return (
@@ -52,6 +62,11 @@ export default function Trading() {
                 padding:'2em'
             }}>
                 Available Money: {availableMoney} $
+                <br/>
+                <TextField type="number" sx={{marginTop:'1em'}}id="outlined-basic" label="Amount to Buy/Sell" variant="outlined" value={amount} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    if(!isNaN(parseInt(event.target.value)) && (parseInt(event.target.value)>= 0)) setAmount(event.target.value) 
+                   
+        }}/>
             </Card>
             <TradingTable 
                 stocks={stocks}

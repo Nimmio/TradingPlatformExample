@@ -3,7 +3,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useLoginStore } from "../store/zustand";
 import { useRouter } from 'next/navigation'
 export default function Login() {
-  const {loggedIn, toggleLogin} = useLoginStore();
+  const {toggleLogin} = useLoginStore();
   const router = useRouter()
 
     const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
