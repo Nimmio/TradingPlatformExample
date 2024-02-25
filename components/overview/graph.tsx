@@ -7,7 +7,6 @@ type props = {
 
 export default function Graph(props: props) {
   const { portfolioHistory } = props;
-  console.log(portfolioHistory);
 
   return (
     <Card
