@@ -1,31 +1,45 @@
-import { Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import Stock from "@/types/stocks";
+import { Button, Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
-export default function TradingTable() {
+type props= {
+  stocks: Stock[]
+  buyStock:(id:number) => void;
+  sellStock:(id:number) => void;
+
+}
+
+export default function TradingTable(props:props) {
+  const { stocks,buyStock, sellStock} = props;
     return (
-            <TableContainer component={Paper} sx={{marginTop: '2em'}}>
-      <Table sx={{ minWidth: 650}} size="small" aria-label="a dense table">
+      <TableContainer sx={{marginTop:'2em'}}component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Bought</TableCell>
+            <TableCell>Value</TableCell>
+            <TableCell>Value of Bought Stocks</TableCell>
+            <TableCell>Buy</TableCell>
+            <TableCell>Sell</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
+        {stocks.map((stock) => (
             <TableRow
-              key='key'
+              key={stock.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {'test1'}
+                {stock.name}
               </TableCell>
-              <TableCell align="right">{'test2'}</TableCell>
-              <TableCell align="right">{'test3'}</TableCell>
-              <TableCell align="right">{'test4'}</TableCell>
-              <TableCell align="right">{'test5'}</TableCell>
+              <TableCell>{stock.bought}</TableCell>
+              <TableCell>{stock.value}</TableCell>
+              <TableCell>{stock.bought * stock.value}</TableCell>
+              <TableCell><Button onClick={() => buyStock(stock.id)}>Buy</Button></TableCell>
+              <TableCell><Button onClick={() => sellStock(stock.id)}>Sell</Button></TableCell>
+
             </TableRow>
+        ))}
         </TableBody>
       </Table>
     </TableContainer>

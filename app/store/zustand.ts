@@ -1,5 +1,5 @@
+import Stock from '@/types/stocks'
 import { create } from 'zustand'
-
 type LoginStore = {
     loggedIn: boolean,
     toggleLogin: () => void,
@@ -12,13 +12,6 @@ type MoneyStore = {
     reduceAvailableMoney: (amount:number) => void,
     increaseAvailableMoney: (amount:number) => void,
     setNewPortfolioValue: (value:number) => void,
-}
-
-type Stock ={
-    id: number,
-    name: string,
-    value: number,
-    bought: number,
 }
 
 type StocksStore = {
@@ -36,7 +29,7 @@ export const useMoneyStore = create<MoneyStore>((set) => ({
     portfolioValue: 0,
     portfolioHistory: [0],
     reduceAvailableMoney: (amount:number) => set((state) => ({ availableMoney: state.availableMoney - amount})),
-    increaseAvailableMoney: (amount:number) => set((state) => ({ availableMoney: state.availableMoney - amount})),
+    increaseAvailableMoney: (amount:number) => set((state) => ({ availableMoney: state.availableMoney + amount})),
     setNewPortfolioValue: (value:number) => set((state) => (
         { 
             portfolioValue: value,
@@ -46,7 +39,7 @@ export const useMoneyStore = create<MoneyStore>((set) => ({
     )),
 }));
 
-export const useStock = create<StocksStore>((set) => ({
+export const useStockStore = create<StocksStore>((set) => ({
     stocks: [
         {
             id:1,

@@ -1,7 +1,14 @@
 import { Card, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 
-export default function Graph() {
+type props = {
+    portfolioHistory: number[]
+}
+
+export default function Graph(props: props) {
+    const {portfolioHistory} = props 
+    console.log(portfolioHistory)
+
     return (
         <Card sx={{
             height:'10em',
@@ -9,10 +16,10 @@ export default function Graph() {
         }}>
         <Typography>Trend</Typography>
         <LineChart
-            xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+        disableAxisListener
             series={[
                 {
-                  data: [2, 5.5, 2, 8.5, 1.5, 5],
+                  data: portfolioHistory,
                 },
               ]}
         />
