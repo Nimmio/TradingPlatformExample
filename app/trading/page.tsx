@@ -63,7 +63,7 @@ export default function Trading() {
             }}>
                 Available Money: {availableMoney} $
                 <br/>
-                <TextField type="number" sx={{marginTop:'1em'}}id="outlined-basic" label="Amount to Buy/Sell" variant="outlined" value={amount} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                <TextField type="number" sx={{marginTop:'2em'}}id="outlined-basic" label="Amount to Buy/Sell" variant="outlined" value={amount} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     if(!isNaN(parseInt(event.target.value)) && (parseInt(event.target.value)>= 0)) setAmount(event.target.value) 
                    
         }}/>

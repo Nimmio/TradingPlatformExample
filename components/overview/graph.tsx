@@ -1,5 +1,5 @@
 import { Card, Typography } from "@mui/material";
-import { LineChart } from "@mui/x-charts";
+import { ChartContainer, LineChart } from "@mui/x-charts";
 
 type props = {
     portfolioHistory: number[]
@@ -14,13 +14,13 @@ export default function Graph(props: props) {
             height:'10em',
             padding:'2em'
         }}>
-        <Typography>Trend</Typography>
+                  <Typography variant="h5" align="center">
+                  Trend
+      </Typography>
         <LineChart
         disableAxisListener
             series={[
-                {
-                  data: portfolioHistory,
-                },
+                { data: portfolioHistory, }
               ]}
         />
         </Card>

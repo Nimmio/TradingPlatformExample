@@ -1,8 +1,18 @@
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import Link from "next/link";
-
+import TimelineIcon from '@mui/icons-material/Timeline';
+import SellIcon from '@mui/icons-material/Sell';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLoginStore } from "@/app/store/zustand";
 export default function LayoutDrawer() {
-    return (
+  const{toggleLogin}=  useLoginStore()
+
+  const handleLogout = () => {
+    toggleLogin()
+  } 
+  return (
+
+
 <Box sx={{ display: 'flex' }}>
 <Drawer
   sx={{
@@ -20,7 +30,7 @@ export default function LayoutDrawer() {
   <ListItem disablePadding key={'overview'}>
         <Link href={'/overview'} passHref legacyBehavior>
           <ListItemButton component="a">
-            <ListItemIcon>{}</ListItemIcon>
+            <ListItemIcon><TimelineIcon /></ListItemIcon>
             <ListItemText primary={'Overview'} />
           </ListItemButton>
         </Link>
@@ -28,10 +38,16 @@ export default function LayoutDrawer() {
   <ListItem disablePadding key={'trading'}>
         <Link href={'/trading'} passHref legacyBehavior>
           <ListItemButton component="a">
-            <ListItemIcon>{}</ListItemIcon>
+            <ListItemIcon><SellIcon /></ListItemIcon>
             <ListItemText primary={'Buy and sell'} />
           </ListItemButton>
         </Link>
+      </ListItem>
+      <ListItem disablePadding key={'Logout'}>
+          <ListItemButton component="a" onClick={handleLogout}>
+            <ListItemIcon><LogoutIcon /></ListItemIcon>
+            <ListItemText primary={'Logout'} />
+          </ListItemButton>
       </ListItem>
   </List>
 </Drawer>

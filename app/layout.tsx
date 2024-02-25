@@ -3,7 +3,7 @@ import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, Lis
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { useLoginStore } from "./store/zustand"; 
-import LayoutDrawer from "@/components/layout/drawer";
+import LayoutDrawer from "@/components/layout/Drawer";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({

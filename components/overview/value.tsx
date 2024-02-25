@@ -12,8 +12,13 @@ export default function Value(props:props) {
             height:'10em',
             padding:'2em'
         }}>
-        <Typography>Value</Typography>
-            {value} $
+                         <Typography variant="h5" align="center">
+            Value
+        </Typography>
+        <Typography variant="h4" align="center">
+        {value} $
+        </Typography>
+            
         </Card>
     );
 }
